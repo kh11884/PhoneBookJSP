@@ -31,7 +31,7 @@
         <button class="btn btn-primary">Сбросить фильтр</button>
     </div>
 
-    <form action="delChecked" method="POST">
+    <form id="del" action="delChecked" method="POST">
         <table class="table table-bordered contact-table">
             <thead>
             <tr>
@@ -55,7 +55,7 @@
             <tr>
                 <td>
                     <label class="select-me-label">
-                        <input type="checkbox" class="select-me" name="ID" id="<%=contact.getId()%>" value="<%=contact.getId()%>"/>
+                        <input type="checkbox" class="select-me" name="selected" value="<%=contact.getId()%>"/>
                     </label>
                 </td>
                 <td>
@@ -71,17 +71,14 @@
                     <% out.println(contact.getPhone()); %>
                 </td>
                 <td>
-                    <form action="del" method="POST">
-                        <button type="submit" class="btn btn-primary" name="ID" value="<%=contact.getId()%>">Del
-                        </button>
-                    </form>
+                    <button type="submit" class="btn btn-primary" name="ID" value="<%=contact.getId()%>">Del
+                    </button>
                 </td>
             </tr>
             <%}%>
             </tbody>
         </table>
-
-        <button type="submit" class="btn btn-primary">Удалить выбранные</button>
+        <button type="submit" class="btn btn-primary" name="delSelected">Удалить выбранные</button>
     </form>
 
     <br>

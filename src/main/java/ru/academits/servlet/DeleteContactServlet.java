@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 
@@ -20,11 +21,23 @@ public class DeleteContactServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestParams = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+        if (!requestParams.equals("")) {
+            System.out.println("параметры: "     + requestParams);
+            String[] pairs = requestParams.split("&");
+            System.out.println("пары: "     + pairs[pairs.length - 1]);
+            if (pairs[pairs.length - 1].equals("delSelected=")) {
+                int[] iDs = contactConverter.getCheckedIDs(pairs);
+                System.out.println("массив ID: " + Arrays.toString(iDs));
+                for (int id: iDs
+                ) {
+                    contactService.delContact(id);
+                }
 
-        int ID = contactConverter.getIDForDelete(requestParams);
-
-        contactService.delContact(ID);
-
+            } else {
+                int ID = contactConverter.getIDForDelete(pairs[0]);
+                contactService.delContact(ID);
+            }
+        }
         resp.sendRedirect("/phonebook");
     }
 }

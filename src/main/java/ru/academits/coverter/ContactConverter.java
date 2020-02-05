@@ -1,10 +1,13 @@
 package ru.academits.coverter;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import ru.academits.model.Contact;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ContactConverter {
@@ -29,8 +32,20 @@ public class ContactConverter {
         return queryPairs;
     }
 
-    public int getIDForDelete (String requestString) throws UnsupportedEncodingException {
+    public int getIDForDelete(String requestString) throws UnsupportedEncodingException {
         Map<String, String> mapRequest = splitQuery(requestString);
         return Integer.parseInt(mapRequest.get("ID"));
+    }
+
+    public int[] getCheckedIDs(String[] pairs) {
+        List<Integer> IDs = new ArrayList<>();
+        for (String pair : pairs) {
+            int idx = pair.indexOf("=");
+            String stringID = pair.substring(idx+1);
+            if(!stringID.equals("")) {
+                IDs.add(Integer.parseInt(stringID));
+            }
+        }
+        return IDs.stream().mapToInt(i -> i).toArray();
     }
 }
