@@ -28,4 +28,9 @@ public class ContactConverter {
         }
         return queryPairs;
     }
+
+    public int getIDForDelete (String requestString) throws UnsupportedEncodingException {
+        Map<String, String> mapRequest = splitQuery(requestString);
+        return Integer.parseInt(mapRequest.get("ID"));
+    }
 }

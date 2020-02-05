@@ -55,7 +55,7 @@
             <tr>
                 <td>
                     <label class="select-me-label">
-                        <input type="checkbox" class="select-me" name="mustBeDeleted" id="<%=contact.getId()%>" value="<%=contact.getId()%>"/>
+                        <input type="checkbox" class="select-me" name="ID" id="<%=contact.getId()%>" value="<%=contact.getId()%>"/>
                     </label>
                 </td>
                 <td>

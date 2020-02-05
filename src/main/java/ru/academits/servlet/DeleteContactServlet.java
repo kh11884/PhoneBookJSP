@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static ru.academits.coverter.ContactConverter.splitQuery;
 
 public class DeleteContactServlet extends HttpServlet {
     private ContactService contactService = PhoneBook.contactService;
@@ -23,8 +21,7 @@ public class DeleteContactServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestParams = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 
-        Map<String, String> mapRequest = splitQuery(requestParams);
-        int ID = Integer.parseInt(mapRequest.get("ID"));
+        int ID = contactConverter.getIDForDelete(requestParams);
 
         contactService.delContact(ID);
 

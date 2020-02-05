@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static ru.academits.coverter.ContactConverter.splitQuery;
 
 public class DeleteCheckedServlet extends HttpServlet {
     private ContactService contactService = PhoneBook.contactService;
@@ -21,15 +19,14 @@ public class DeleteCheckedServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestParams = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         System.out.println(requestParams);
+        if (!requestParams.equals("")) {
+            String[] pairs = requestParams.split("&");
 
-        String[] pairs = requestParams.split("&");
-
-
-//        Map<String, String> mapRequest = splitQuery(requestParams);
-//        int ID = Integer.parseInt(mapRequest.get("ID"));
-//        System.out.println("delID: " + ID);
-//        contactService.delContact(ID);
-
+            for (String pair : pairs) {
+                int ID = contactConverter.getIDForDelete(pair);
+                contactService.delContact(ID);
+            }
+        }
         resp.sendRedirect("/phonebook");
     }
 }
