@@ -16,8 +16,6 @@
 </head>
 <body>
 
-<h1>My Phonebook</h1>
-
 <div class="delete-dialog"></div>
 
 <div class="alert" title="Нет выбранных контактов"></div>
@@ -31,13 +29,13 @@
         <button class="btn btn-primary">Сбросить фильтр</button>
     </div>
 
-    <form id="del" action="delChecked" method="POST">
+    <form id="del" action="del" method="POST">
         <table class="table table-bordered contact-table">
             <thead>
             <tr>
                 <th>
                     <label class="select-all-label">
-                        <input type="checkbox" title="Выбрать"/>
+                        <input type="checkbox" title="Выбрать" onchange="checkAll(this)"/>
                     </label>
                 </th>
                 <th>№</th>
@@ -78,7 +76,7 @@
             <%}%>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary" name="delSelected">Удалить выбранные</button>
+        <button type="submit" class="btn btn-primary">Удалить выбранные</button>
     </form>
 
     <br>
@@ -134,5 +132,19 @@
         <button type="submit" class="btn btn-primary">Добавить</button>
     </form>
 </div>
+<script type="text/javascript">
+    function checkAll(masterCheckbox) {
+        var checkboxes = document.getElementsByClassName("select-me");
+        if (masterCheckbox.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = true;
+            }
+        } else {
+            for (var k = 0; k < checkboxes.length; k++) {
+                checkboxes[k].checked = false;
+            }
+        }
+    }
+</script>
 </body>
 </html>
